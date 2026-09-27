@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Model & Display Lab (Initial)</title>
+    <style>
+        * {
+            box-sizing: content-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            padding: 24px;
+            color: #333;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .layout {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .controls {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 320px;
+        }
+
+        .control-group {
+            margin-bottom: 16px;
+        }
+
+        .control-group label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .control-group input[type="range"] {
+            width: 100%;
+        }
+
+        .control-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .canvas-area {
+            flex: 1;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            min-height: 400px;
+            border: 2px dashed #cbd5e1;
+        }
+
+        /* Box styling */
+        #box1 {
+            width: 180px;
+            height: 120px;
+            padding: 25px;
+            margin: 25px;
+            border: 5px solid #2563eb;
+            display: block;
+
+            /* Visualizing box model layers */
+            background-color: #fef08a;
+            background: linear-gradient(#93c5fd, #93c5fd) content-box,
+                        linear-gradient(#86efac, #86efac) padding-box,
+                        #fef08a;
+            color: #1e3a8a;
+            font-weight: bold;
+            text-align: center;
+            line-height: 120px;
+        }
+
+        #box2 {
+            display: inline-block;
+            width: 160px;
+            height: 100px;
+            background: #f87171;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            line-height: 100px;
+            border: 3px solid #b91c1c;
+            border-radius: 4px;
+        }
+
+        .legend {
+            margin-top: 20px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .legend span {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            margin-right: 6px;
+            vertical-align: middle;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Box Model & Display Interactive Lab</h1>
+    <div class="layout">
+        <div class="controls">
+            <h3>Controls for Box 1</h3>
+            <br>
+            <div class="control-group">
+                <label>Display: </label>
+                <select id="displaySelect">
+                    <option value="block" selected>block</option>
+                    <option value="inline-block">inline-block</option>
+                    <option value="inline">inline</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Width: <span id="widthVal">180px</span></label>
+                <input type="range" id="widthSlider" min="60" max="350" value="180">
+            </div>
+
+            <div class="control-group">
+                <label>Padding: <span id="paddingVal">25px</span></label>
+                <input type="range" id="paddingSlider" min="0" max="80" value="25">
+            </div>
+
+            <div class="control-group">
+                <label>Margin: <span id="marginVal">25px</span></label>
+                <input type="range" id="marginSlider" min="0" max="80" value="25">
+            </div>
+
+            <div class="control-group">
+                <label>Border Width: <span id="borderVal">5px</span></label>
+                <input type="range" id="borderSlider" min="0" max="30" value="5">
+            </div>
+
+            <div class="legend">
+                <p><strong>Color Key:</strong></p>
+                <p><span style="background: #93c5fd;"></span> Content Box (Blue)</p>
+                <p><span style="background: #86efac;"></span> Padding Box (Green)</p>
+                <p><span style="background: #2563eb;"></span> Border (Solid Blue)</p>
+            </div>
+        </div>
+
+        <div class="canvas-area">
+            <div id="box1">Box 1</div>
+            <div id="box2">Box 2</div>
+        </div>
+    </div>
+
+    <script>
+        const box1 = document.getElementById('box1');
+        const displaySelect = document.getElementById('displaySelect');
+        const widthSlider = document.getElementById('widthSlider');
+        const paddingSlider = document.getElementById('paddingSlider');
+        const marginSlider = document.getElementById('marginSlider');
+        const borderSlider = document.getElementById('borderSlider');
+
+        const widthVal = document.getElementById('widthVal');
+        const paddingVal = document.getElementById('paddingVal');
+        const marginVal = document.getElementById('marginVal');
+        const borderVal = document.getElementById('borderVal');
+
+        function updateStyles() {
+            const display = displaySelect.value;
+            const width = widthSlider.value + 'px';
+            const padding = paddingSlider.value + 'px';
+            const margin = marginSlider.value + 'px';
+            const border = borderSlider.value + 'px';
+
+            widthVal.textContent = width;
+            paddingVal.textContent = padding;
+            marginVal.textContent = margin;
+            borderVal.textContent = border;
+
+            box1.style.display = display;
+            box1.style.width = width;
+            box1.style.padding = padding;
+            box1.style.margin = margin;
+            box1.style.borderWidth = border;
+        }
+
+        displaySelect.addEventListener('change', updateStyles);
+        widthSlider.addEventListener('input', updateStyles);
+        paddingSlider.addEventListener('input', updateStyles);
+        marginSlider.addEventListener('input', updateStyles);
+        borderSlider.addEventListener('input', updateStyles);
+
+        updateStyles();
+    </script>
+</body>
+</html>

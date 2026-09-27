@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Model & Display Lab (Refined Side-Specific)</title>
+    <style>
+        * {
+            box-sizing: content-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            padding: 24px;
+            color: #333;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .layout {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .controls {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 360px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin: 12px 0 6px 0;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 4px;
+        }
+
+        .control-group {
+            margin-bottom: 10px;
+        }
+
+        .control-group label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .control-group input[type="range"] {
+            width: 100%;
+        }
+
+        .control-group select {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .canvas-area {
+            flex: 1;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            min-height: 450px;
+            border: 2px dashed #cbd5e1;
+        }
+
+        /* Box styling */
+        #box1 {
+            width: 180px;
+            height: 120px;
+            padding: 20px 20px 20px 20px;
+            margin: 20px 20px 20px 20px;
+            border-style: solid;
+            border-color: #2563eb;
+            border-width: 4px 4px 4px 4px;
+            border-radius: 0px;
+            display: block;
+
+            background: linear-gradient(#93c5fd, #93c5fd) content-box,
+                        linear-gradient(#86efac, #86efac) padding-box,
+                        #fef08a;
+            color: #1e3a8a;
+            font-weight: bold;
+            text-align: center;
+            line-height: 120px;
+        }
+
+        #box2 {
+            display: inline-block;
+            width: 160px;
+            height: 100px;
+            background: #f87171;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            line-height: 100px;
+            border: 3px solid #b91c1c;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Box Model & Display Lab (Side-Specific Controls)</h1>
+    <div class="layout">
+        <div class="controls">
+            <div class="control-group">
+                <label><strong>Display:</strong></label>
+                <select id="displaySelect">
+                    <option value="block" selected>block</option>
+                    <option value="inline-block">inline-block</option>
+                    <option value="inline">inline</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Width: <span id="wVal">180px</span></label>
+                <input type="range" id="wSlider" min="60" max="350" value="180">
+            </div>
+
+            <div class="control-group">
+                <label>Corner Radius: <span id="radiusVal">0px</span></label>
+                <input type="range" id="radiusSlider" min="0" max="60" value="0">
+            </div>
+
+            <div class="section-title">Padding (Top, Right, Bottom, Left)</div>
+            <div class="control-group">
+                <label>Top: <span id="ptVal">20px</span></label>
+                <input type="range" id="ptSlider" min="0" max="60" value="20">
+            </div>
+            <div class="control-group">
+                <label>Right: <span id="prVal">20px</span></label>
+                <input type="range" id="prSlider" min="0" max="60" value="20">
+            </div>
+            <div class="control-group">
+                <label>Bottom: <span id="pbVal">20px</span></label>
+                <input type="range" id="pbSlider" min="0" max="60" value="20">
+            </div>
+            <div class="control-group">
+                <label>Left: <span id="plVal">20px</span></label>
+                <input type="range" id="plSlider" min="0" max="60" value="20">
+            </div>
+
+            <div class="section-title">Margin (Top, Right, Bottom, Left)</div>
+            <div class="control-group">
+                <label>Top: <span id="mtVal">20px</span></label>
+                <input type="range" id="mtSlider" min="0" max="60" value="20">
+            </div>
+            <div class="control-group">
+                <label>Right: <span id="mrVal">20px</span></label>
+                <input type="range" id="mrSlider" min="0" max="60" value="20">
+            </div>
+            <div class="control-group">
+                <label>Bottom: <span id="mbVal">20px</span></label>
+                <input type="range" id="mbSlider" min="0" max="60" value="20">
+            </div>
+            <div class="control-group">
+                <label>Left: <span id="mlVal">20px</span></label>
+                <input type="range" id="mlSlider" min="0" max="60" value="20">
+            </div>
+
+            <div class="section-title">Border Width (Top, Right, Bottom, Left)</div>
+            <div class="control-group">
+                <label>Top: <span id="btVal">4px</span></label>
+                <input type="range" id="btSlider" min="0" max="25" value="4">
+            </div>
+            <div class="control-group">
+                <label>Right: <span id="brVal">4px</span></label>
+                <input type="range" id="brSlider" min="0" max="25" value="4">
+            </div>
+            <div class="control-group">
+                <label>Bottom: <span id="bbVal">4px</span></label>
+                <input type="range" id="bbSlider" min="0" max="25" value="4">
+            </div>
+            <div class="control-group">
+                <label>Left: <span id="blVal">4px</span></label>
+                <input type="range" id="blSlider" min="0" max="25" value="4">
+            </div>
+        </div>
+
+        <div class="canvas-area">
+            <div id="box1">Box 1</div>
+            <div id="box2">Box 2</div>
+        </div>
+    </div>
+
+    <script>
+        const box1 = document.getElementById('box1');
+        const displaySelect = document.getElementById('displaySelect');
+        const wSlider = document.getElementById('wSlider');
+        const radiusSlider = document.getElementById('radiusSlider');
+
+        const ptSlider = document.getElementById('ptSlider');
+        const prSlider = document.getElementById('prSlider');
+        const pbSlider = document.getElementById('pbSlider');
+        const plSlider = document.getElementById('plSlider');
+
+        const mtSlider = document.getElementById('mtSlider');
+        const mrSlider = document.getElementById('mrSlider');
+        const mbSlider = document.getElementById('mbSlider');
+        const mlSlider = document.getElementById('mlSlider');
+
+        const btSlider = document.getElementById('btSlider');
+        const brSlider = document.getElementById('brSlider');
+        const bbSlider = document.getElementById('bbSlider');
+        const blSlider = document.getElementById('blSlider');
+
+        function updateAll() {
+            box1.style.display = displaySelect.value;
+            box1.style.width = wSlider.value + 'px';
+            document.getElementById('wVal').textContent = wSlider.value + 'px';
+
+            box1.style.borderRadius = radiusSlider.value + 'px';
+            document.getElementById('radiusVal').textContent = radiusSlider.value + 'px';
+
+            box1.style.paddingTop = ptSlider.value + 'px';
+            box1.style.paddingRight = prSlider.value + 'px';
+            box1.style.paddingBottom = pbSlider.value + 'px';
+            box1.style.paddingLeft = plSlider.value + 'px';
+            document.getElementById('ptVal').textContent = ptSlider.value + 'px';
+            document.getElementById('prVal').textContent = prSlider.value + 'px';
+            document.getElementById('pbVal').textContent = pbSlider.value + 'px';
+            document.getElementById('plVal').textContent = plSlider.value + 'px';
+
+            box1.style.marginTop = mtSlider.value + 'px';
+            box1.style.marginRight = mrSlider.value + 'px';
+            box1.style.marginBottom = mbSlider.value + 'px';
+            box1.style.marginLeft = mlSlider.value + 'px';
+            document.getElementById('mtVal').textContent = mtSlider.value + 'px';
+            document.getElementById('mrVal').textContent = mrSlider.value + 'px';
+            document.getElementById('mbVal').textContent = mbSlider.value + 'px';
+            document.getElementById('mlVal').textContent = mlSlider.value + 'px';
+
+            box1.style.borderTopWidth = btSlider.value + 'px';
+            box1.style.borderRightWidth = brSlider.value + 'px';
+            box1.style.borderBottomWidth = bbSlider.value + 'px';
+            box1.style.borderLeftWidth = blSlider.value + 'px';
+            document.getElementById('btVal').textContent = btSlider.value + 'px';
+            document.getElementById('brVal').textContent = brSlider.value + 'px';
+            document.getElementById('bbVal').textContent = bbSlider.value + 'px';
+            document.getElementById('blVal').textContent = blSlider.value + 'px';
+        }
+
+        document.querySelectorAll('input, select').forEach(el => {
+            el.addEventListener('input', updateAll);
+            el.addEventListener('change', updateAll);
+        });
+        updateAll();
+    </script>
+</body>
+</html>
